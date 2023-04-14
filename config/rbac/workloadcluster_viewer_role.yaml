@@ -1,0 +1,27 @@
+# permissions for end users to view workloadclusters.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: workloadcluster-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: kubefirst-cluster-operator
+    app.kubernetes.io/part-of: kubefirst-cluster-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: workloadcluster-viewer-role
+rules:
+- apiGroups:
+  - cluster.kubefirst.io
+  resources:
+  - workloadclusters
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - cluster.kubefirst.io
+  resources:
+  - workloadclusters/status
+  verbs:
+  - get

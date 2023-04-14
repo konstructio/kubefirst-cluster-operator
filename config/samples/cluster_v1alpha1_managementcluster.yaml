@@ -1,0 +1,12 @@
+apiVersion: cluster.kubefirst.io/v1alpha1
+kind: ManagementCluster
+metadata:
+  labels:
+    app.kubernetes.io/name: managementcluster
+    app.kubernetes.io/instance: managementcluster-sample
+    app.kubernetes.io/part-of: kubefirst-cluster-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: kubefirst-cluster-operator
+  name: managementcluster-sample
+spec:
+  # TODO(user): Add fields here
