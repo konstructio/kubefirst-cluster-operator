@@ -1,17 +1,8 @@
 /*
-Copyright 2023.
+Copyright (C) 2021-2023, Kubefirst
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+This program is licensed under MIT.
+See the LICENSE file for more details.
 */
 
 package v1alpha1
@@ -28,20 +19,35 @@ type ManagementClusterSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of ManagementCluster. Edit managementcluster_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	// CloudProvider specifies the cloud on which the cluster will be created
+	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	CloudProvider string `json:"cloud_provider"`
+	// CloudRegion specifies the region within the cloud provider in which the cluster will be created
+	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	CloudRegion string `json:"cloud_region"`
+	// DomainName specifies the domain name for DNS
+	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	DomainName string `json:"domain_name"`
+	// AlertsEmail specifies the contact email for the cluster
+	// +operator-sdk:csv:customresourcedefinitions:type=spec
+	AlertsEmail string `json:"alerts_email"`
 }
 
 // ManagementClusterStatus defines the observed state of ManagementCluster
 type ManagementClusterStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+
+	// Conditions store the status conditions of the cluster instances
+	// +operator-sdk:csv:customresourcedefinitions:type=status
+	Conditions []metav1.Condition `json:"conditions,omitempty" patchStrategy:"merge" patchMergeKey:"type" protobuf:"bytes,1,rep,name=conditions"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
 // ManagementCluster is the Schema for the managementclusters API
+// +kubebuilder:subresource:status
 type ManagementCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
